@@ -33,4 +33,19 @@ router.delete("/:id", async (req, res) => {
     }
 });
 
+router.put("/:id", async (req, res) => {
+    try {
+        const { title, description } = req.body;
+        const updatedBook = await Book.findByIdAndUpdate(
+            req.params.id,
+            { title, description },
+            { new: true } // Return updated book
+        );
+        res.json(updatedBook);
+    } catch (err) {
+        res.status(500).json({ message: "Error updating book" });
+    }
+});
+
+
 module.exports = router;
